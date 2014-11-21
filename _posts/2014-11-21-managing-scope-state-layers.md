@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Managing Scope - #1 State Layers"
+title:  "Managing Scope: #1 State Layers"
 date:   2014-11-21 12:00:00
 categories: angularjs scope state models
 ---
