@@ -1,0 +1,21 @@
+# Head
+title: Angular Tomatao
+description: > # this means to ignore newlines until "baseurl:"
+  A series of articles discussing patterns in Angular JS to solve common problems.
+
+# Urls
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+permalink: "/blog/:title"
+
+# User
+email: tom@tomatao.co.uk
+twitter_username:
+github_username:  tomatau
+
+# Pagination
+
+# Build
+markdown: redcarpet
+kramdown:
+    input: GFM
