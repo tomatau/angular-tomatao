@@ -333,6 +333,10 @@ This is a very flexible approach as we can make new models and collections very 
 - These Models are also very similar to the idea of React stores... the one key difference is that our models have public set methods. This can be a problem and will require discipline to keep manageable --
 - To solve these problems, we should talk about an Action layer, one direction data flow.
 
+### Next Post
+
+I will next post about solutions to the above problems using Action layers and one direct data flows.
+
 [ui.router]: https://github.com/angular-ui/ui-router
 
 
