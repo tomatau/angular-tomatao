@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Managing Scope - Using a State Layer"
+title:  "Managing Scope - #1 State Layers"
 date:   2014-11-21 12:00:00
 categories: angularjs scope state models
 ---
@@ -17,7 +17,7 @@ I will no doubt make a few more blog posts about the subject of `state` manageme
 
 There are a number of existing solutions to manage this complexity; here are a few:
 
-### Pass by Reference on Scope
+### 1. Pass by Reference on Scope
 
 This is a very basic fix, when working with `$scope`, if you add value properties directly such as *Strings* or *Numbers* -- updates may not behave as you expect. JavaScript is a pass by value language -- so use objects to maintain references and keep those bindings in sync.
 
@@ -32,7 +32,7 @@ This is a very basic fix, when working with `$scope`, if you add value propertie
 
 - This is merely a best practice and doesn't address managing state.
 
-### Controller Alias Syntax
+### 2. Controller Alias Syntax
 
 You can avoid the use of `$scope` greatly by aliasing your controllers inside each view which is a fantastic way to reduce complexity. As a result, nested controllers become far more manageable as their $scope's do not collide.
 
@@ -70,7 +70,7 @@ This can be enabled on a simple view by adding the `as [controller's alias]` in 
 
 Alternatively you can add it to you `$routeProvide.when` configuration objects or directive definition objects by using the *controllerAs* property:
 
-```javascript
+```js
 controllerAs: 'my', // set to whatever alias you would like
 controller: 'MyCtrl'
 ```
@@ -81,7 +81,7 @@ controller: 'MyCtrl'
 - We have more boilerplate outside of controllers.
 - Often need to save assign `this` to another name to avoid context bugs e.g. `var vm = this`, to make `$scope.$watch` functions work, etc...
 
-### Angular Resources and $http Wrappers
+### 3. Angular Resources and $http Wrappers
 
 Taking the state outside of the controller is a great practice, it can reduce the size of controllers greatly -- making them both easier to manage and easier to test! One very common solution here, is to make factory or service methods which make specific $http calls to fetch the state. You can then expose the methods to controllers.
 
@@ -89,7 +89,7 @@ These can be called "models", "entities", "services", "resources", "repositories
 
 Here's an example of a very simple one for managing a user:
 
-```javascript
+```js
 .factory('User', function($http, $q, userEndpointConfig){
     var userData = {};
     return {
@@ -123,13 +123,13 @@ Now, multiple controllers can use the `User.getUser()` method to populate their 
 - The "models" become very large -- managing both behaviours, state and persistence.
 - Swapping out one backend for say indexedDB, localStorage, Web Workers, sockets or Firebase, etc... could be very time consuming and problematic -- having to change each method throughout each Persistence Wrapper.
 
-### Resolve Blocks
+### 4. Resolve Blocks
 
-When you're configuring route's through the `$routeProvider` or ui.router's `$stateProvider` -- each `when` or `state` has a `resolve` property that can be used to populate the state on a page load. This is great in conjunction with Persistence Wrappers as you can remove much of the promise logic from your controllers. Thus, much easier to test!
+When you're configuring route's through the `$routeProvider` or [Ui Router][ui.router]'s `$stateProvider` -- each `when` or `state` has a `resolve` property that can be used to populate the state on a page load. This is great in conjunction with Persistence Wrappers as you can remove much of the promise logic from your controllers. Thus, much easier to test!
 
-Using UI.Router makes this even better, as we can use nested states to manage these resolves for multiple controllers per route! More to come on this soon!
+Using [Ui Router][ui.router] makes this even better, as we can use nested states to manage these resolves for multiple controllers per route! More to come on this soon!
 
-```javascript
+```js
 $routeProvider
     .when('/user-profile', {
         resolve: {
@@ -143,17 +143,59 @@ $routeProvider
 We can also use resolve blocks to help with our initial page load. We're also moving the calls to our persistence outside of the controller, making it much smaller.
 
 **Problems**
+
 - When navigating between routes, it isn't explicit about how many times these methods will be called, e.g. if you go back to the previous page -- will it be called again or will it use a cache of the previous result? It isn't obvious from looking at it.
 - Still end up with big Persistence wrappers.
-- Controllers still can't so easily respond to each other's events.
+- Views still can't easily respond to each other's events.
 
 ### `$scope` and `$rootScope` Events
 
-### State Machines
+To tackle the problem of responding to events, people often subscribe callback functions to specific events in their controllers. This is fairly straight forward and quite effective for loose coupling your components such as analytical bookkeeping, notifications any whatever else! Events are incredibly powerful for creating resilient and scalable systems.
 
-## Using a State Layer
+```js
+.controller('MyCtrl', function($scope){
+    $scope.$on('namespaced:custom-event', function(){
+        // respond to event
+    });
+})
+```
 
+**Problems**
 
+- Event's in angular can be a little bit confusing as they inherit from parent scopes which you cannot see by looking at a single controller.
+- $rootScope's injected into controllers aren't the parent scope of controller's scopes and can be confusing.
+- When the number of events grow in number, the boilerplate starts becoming tedious and messy, controllers become littered with `$scope.$on`.
+- Doesn't provide any hierarchy for choosing which place to place initialisation logic.
+- As controllers require compilation for testing, they aren't the ideal place to unit test event based behaviours.
 
+### 5. State Machines
+
+State machines are an incredibly useful pattern for organising and having some pattern to manage different application states. This can be conjoined effectively with routing to manage page refreshes effectively. One great tool for this is [Ui Router][ui.router] -- this not only allows you to manage URL based routes, but also lets you manage *states* and their dependencies.
+
+[Ui Router][ui.router] has additional features on top of the normal ngRouter module such as nested routes, named states and the potential to build layouts for specific states that can have optional resolve properties.
+
+This is incredibly powerful when mixed with resolve blocks and Persistence Wrappers for controlling your initial page load. Giving hierarchies to our states and allow
+
+**Problems**
+
+- Still no way to manage events that trigger behaviour across multiple views.
+- Can end up with very large configurations of routing and states that become difficult to manage.
+
+# Using a State Layer
+
+So how can we manage these two remaining problems? The overall solution involves a number of techniques:
+
+- A State Layer
+- An Action Layer
+- One direction data flow
+- Resolve hierarchies and pipes
+- Initial state control
+- Appropriate module splits and independent configurations
+- Boundary control
+- Inversion of Control dependency injection
+
+In this post I'll only chat about a state layer - the basic idea is to have a layer of "Models" in the more traditional sense of the word
+
+[ui.router]: https://github.com/angular-ui/ui-router
 
 

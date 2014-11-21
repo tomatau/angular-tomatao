@@ -17,5 +17,9 @@ github_username:  tomatau
 
 # Build
 markdown: redcarpet
+redcarpet:
+  extensions:
+    - footnotes
+    - autolink
 kramdown:
     input: GFM
