@@ -1,0 +1,25 @@
+{
+  "name": "jekyool",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "bundle exec jekyll serve --baseurl '' -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomatau/angular-tomatao.git"
+  },
+  "keywords": [
+    "angularjs",
+    "blog",
+    "tomatao"
+  ],
+  "author": "tomatao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomatau/angular-tomatao/issues"
+  },
+  "homepage": "https://github.com/tomatau/angular-tomatao"
+}

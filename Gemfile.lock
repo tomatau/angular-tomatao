@@ -116,3 +116,4 @@ PLATFORMS
 DEPENDENCIES
   github-pages (= 28)
   json
+  sass (= 3.4.8)
