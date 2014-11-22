@@ -78,7 +78,9 @@ controller: 'MyCtrl'
 **Problems**
 
 - This again is simply a best practice for nesting controllers.
-- We have more boilerplate outside of controllers.
+- We are still storing data on $scope but on a property inside the scope object, it adds "the dot" to our expressions but doesn't address the problems we'v mentioned such as "initial state", "events", "route hierarchies" or "persisting data".
+- We have more boilerplate in views, routes and directives instead of in the controllers themselves.
+- Often you still need to inject `$scope` anyway for watches, or events.
 - Often need to save assign `this` to another name to avoid context bugs e.g. `var vm = this`, to make `$scope.$watch` functions work, etc...
 
 #### 3. Persistence Abstractions
