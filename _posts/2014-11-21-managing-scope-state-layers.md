@@ -7,9 +7,19 @@ categories: angularjs scope state models
 
 ## Scope gets Complicated
 
-One of the most common problems I hear people running into is that scope gets out of control. When this happens, files can become very large and complicated to deal with the edge cases, such as: page refreshes, multiple views needing to respond to events, route organisation and persisting state! There are of course, many other potential problems that can pop up.
+One of the most common problems I hear people running into is that scope gets out of control. When this happens, files can become very large and complicated to deal with the edge cases, such as:
 
-I will first talk about some existing solutions and their problems. Finally, I will talk about separating state from behaviour using a state layer that reduces controller boilerplate, increases code-reuse and provides the facility to manage persistence and page loads effectively.
+- page refreshes to continue sessions
+- multiple views needing to respond to events
+- route organisation
+- persisting complex data via transactions
+- mapping complex APIs or schemas to view data
+- user authentication
+- testing all of the above
+
+There are of course, many other potential problems that can pop up -- the list would go on! The problem mainly boils down to state, changing state and sharing it between various locations in a code-base.
+
+I will first talk about some existing solutions to "complex scopes" and their problems. Finally, I will talk about separating state from behaviour using a state layer that reduces controller boilerplate, increases code-reuse and provides the facility to manage persistence and page loads effectively.
 
 I will no doubt make a few more blog posts about the subject of `state` management in AngularJS.
 
@@ -30,7 +40,7 @@ This is a very basic fix, when working with `$scope`, if you add value propertie
 
 **Problems**
 
-- This is merely a best practice and doesn't address managing state.
+- This is merely a best practice and doesn't address any of the problems mentioned.
 
 #### 2. Controller Alias Syntax
 
@@ -185,13 +195,13 @@ This is incredibly powerful when mixed with resolve blocks and Persistence Abstr
 
 # Using a State Layer
 
-So how can we manage these two remaining problems? The overall solution involves a number of techniques:
+So how can we manage these two remaining problems? The complete solution involves a number of techniques in an Angular project:
 
 - A State Layer
 - An Action Layer
 - One direction data flow
 - Resolve hierarchies and pipes
-- Initial state control
+- Initial state management
 - Appropriate module splits and independent configurations
 - Boundary control
 - Inversion of Control dependency injection
