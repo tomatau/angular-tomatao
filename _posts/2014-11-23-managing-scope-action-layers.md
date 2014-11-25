@@ -26,9 +26,9 @@ You can take a look at [part 1 here][part1] -- I spoke about a few techniques th
 5. Scope Events for triggering behaviours.
 6. State Machines such as `ui.router`.
 
-Each of these solutions also had a number of problems with each -- and how none of these really address the problems of complex State fully -- even when using all of them together!
+Each of these solutions had a number of problems and none of these really address the problems of complex State fully -- even when using all of them together!
 
-Then I said that the overall solution for these problems requires a combination of several techniques. The first technique was to use a State Layer.
+Then I said that the overall solution for these problems requires a combination of several techniques. The first technique was to use a **State Layer**.
 
 ### A State Layer?
 
