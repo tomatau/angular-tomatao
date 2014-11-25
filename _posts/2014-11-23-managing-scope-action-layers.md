@@ -193,7 +193,7 @@ Can you see how this reflects our business use case? We've got updates to analyt
 
 ### Next Post
 
-I will post about further solutions to the problems discussed in [Part 1][part1] and the subject of **.
+I will post about further solutions to the problems discussed in [Part 1][part1] and the subject of **Initial state management**.
 
 [part1]: /blog/managing-scope-state-layers/
 
