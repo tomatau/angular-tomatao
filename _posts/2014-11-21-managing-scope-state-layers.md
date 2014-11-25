@@ -5,7 +5,7 @@ date:   2014-11-21 12:00:00
 categories: angularjs scope state models
 ---
 
-## Scope gets Complicated
+# Scope gets Complicated
 
 One of the most common problems I hear people running into is that scope gets out of control. When this happens, files can become very large and complicated to deal with the edge cases, such as:
 
@@ -27,7 +27,7 @@ I will no doubt make a few more blog posts about the subject of `state` manageme
 
 There are a number of existing solutions to manage this complexity - I'll cover the one's that often pop up!
 
-#### 1. Pass by Reference on Scope
+### 1. Pass by Reference on Scope
 
 This is a very basic fix, when working with `$scope`, if you add value properties directly such as *Strings* or *Numbers* -- updates may not behave as you expect. JavaScript is "call by sharing" language -- so use objects to maintain references and keep those bindings in sync!
 
@@ -42,7 +42,7 @@ This is a very basic fix, when working with `$scope`, if you add value propertie
 
 - This is merely a best practice and doesn't address any of the problems mentioned.
 
-#### 2. Controller Alias Syntax
+### 2. Controller Alias Syntax
 
 You can avoid the use of `$scope` greatly by aliasing your controllers inside each view which is a fantastic way to reduce complexity. As a result, nested controllers become far more manageable as their $scope's do not collide.
 
@@ -93,7 +93,7 @@ controller: 'MyCtrl'
 - Often you still need to inject `$scope` anyway for watches, or events.
 - Often need to save assign `this` to another name to avoid context bugs e.g. `var vm = this`, to make `$scope.$watch` functions work, etc...
 
-#### 3. Persistence Abstractions
+### 3. Persistence Abstractions
 
 Taking the state outside of the controller is a great practice, it can reduce the size of controllers greatly -- making them both easier to manage and easier to test! One very common solution here, is to make factory or service methods which make specific $http calls to fetch the state. You can then expose the methods to controllers.
 
@@ -135,7 +135,7 @@ Now, multiple controllers can use the `User.getUser()` method to populate their 
 - The "models" become very large -- managing both behaviours, state and persistence.
 - Swapping out one backend for say indexedDB, localStorage, Web Workers, sockets or Firebase, etc... could be very time consuming and problematic -- having to change each method throughout each Persistence Abstraction.
 
-#### 4. Resolve Blocks
+### 4. Resolve Blocks
 
 When you're configuring route's through the `$routeProvider` or [Ui Router][ui.router]'s `$stateProvider` -- each `when` or `state` has a `resolve` property that can be used to populate the state on a page load. This is great in conjunction with Persistence Abstractions as you can remove much of the promise logic from your controllers. Thus, much easier to test!
 
@@ -160,7 +160,7 @@ We can also use resolve blocks to help with our initial page load. We're also mo
 - Still end up with big Persistence Abstractions.
 - Views still can't easily respond to each other's events.
 
-#### 5. Event Based Behaviours
+### 5. Event Based Behaviours
 
 To tackle the problem of responding to events, people often subscribe callback functions to specific events in their controllers. This is fairly straight forward and quite effective for loose coupling your components such as analytical bookkeeping, notifications any whatever else! Events are incredibly powerful for creating resilient and scalable systems.
 
@@ -180,7 +180,7 @@ To tackle the problem of responding to events, people often subscribe callback f
 - Doesn't provide any hierarchy for choosing which place to place initialisation logic.
 - As controllers require compilation for testing, they aren't the ideal place to unit test event based behaviours.
 
-#### 6. State Machines
+### 6. State Machines
 
 State machines are an incredibly useful pattern for organising and having some pattern to manage different application states. This can be conjoined effectively with routing to manage page refreshes effectively. One great tool for this is [Ui Router][ui.router] -- this not only allows you to manage URL based routes, but also lets you manage *states* and their dependencies.
 
@@ -193,7 +193,7 @@ This is incredibly powerful when mixed with resolve blocks and Persistence Abstr
 - Still no way to manage events that trigger behaviour across multiple views.
 - Can end up with very large configurations of routing and states that become difficult to manage.
 
-# Using a State Layer
+## Using a State Layer
 
 So how can we manage these two remaining problems? The complete solution involves a number of techniques in an Angular project:
 
@@ -210,7 +210,7 @@ In this post I'll only chat about a **state layer** - the basic idea is to have 
 
 When you separate out the calls to `$http`, `localStorage` or any other  persistence layer from the models which hold their item state -- you are focusing on single responsibilities, reducing boilerplate, increasing reuse and making your overall model much more simple.
 
-## Objects Keeping References
+#### Objects Should Keep References
 
 When you use a state layer, it can be helpful to be strict about keeping an object or array that maintains it's initial instance. This will ensure that any views using this Model are always pointing at the same object!
 
@@ -275,7 +275,7 @@ describe('Model', function () {
 
 ```
 
-## Extending
+#### Extending Prototypes
 
 Backbone JS has a very similar concept in Collections and Models but the backbone style also involves the RESTful API calls. When you remove the persistence layer integration, having base entities to extend becomes far more practical. You can even use the Backbone's `extend` method to provide a nice baseModel and baseEntity.
 
@@ -345,7 +345,7 @@ This is a very flexible approach as we can make new models and collections very 
 - These Models are also very similar to the idea of React stores... the one key difference is that our models have public set methods. This can be a problem and will require discipline to keep manageable --
 - To solve these problems, we should talk about an Action layer, one direction data flow.
 
-#### Next Post
+### Next Post
 
 I will next post about solutions to the above problems using Action layers and one direct data flows.
 
