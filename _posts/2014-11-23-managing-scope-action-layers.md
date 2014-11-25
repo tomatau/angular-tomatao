@@ -160,7 +160,7 @@ Let's add the submit method to the view along with the `Action Layer Service` na
 })
 ```
 
-Pretty straight forward! We could add things like a modal dialog here by wrapping the `updateUserProfile` function call inside a function and calling `then` off the promise that the action returns. A nice small controller and the logic for saving it is completely reusable -- so we can even let our sidebar controller update the profile without ever needing to see the Profile state itself -- and no messy `$scope.$on` listeners!
+Pretty straight forward! We could add things like a modal dialog here by wrapping the `updateUserProfile` function call inside a function and calling `then` off the promise that the action returns. Now we have a nice small controller, and the logic for saving it is completely reusable. We can even have say... a sidebar controller that can update the profile without ever needing to see the Profile state itself -- and no messy `$scope.$on` listeners!
 
 For good measure, let's have a look at the `updateUserProfile` action, it follows the same routine as the fetchUserProfile action from earlier.
 
