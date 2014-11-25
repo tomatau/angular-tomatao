@@ -120,7 +120,7 @@ In the Flux architecture you would have actions that can modify stores, this is 
 
 ### One Direction Data Flow
 
-As in Flux, we are making use of a one direction data flow -- Views listen to the State Layer -> controllers, routes and sockets use Actions in -> Actions update the State Layer. It provides a single point of truth for your application state, making it not only easier to manage, but also easier to test!
+As in Flux, we are making use of a one direction data flow -- Views listen to the State Layer -> controllers, routes and sockets use Actions -> Actions update the State Layer. It provides a single point of truth for your application state, making it not only easier to manage, but also easier to test!
 
 ### Action Services Return Promises
 
@@ -160,7 +160,7 @@ Let's add the submit method to the view along with the `Action Layer Service` na
 })
 ```
 
-Pretty straight forward! We could add things like a model here by wrapping the `updateUserProfile` function call inside a function and calling `then` off the promise that the action returns. A nice small controller and the logic for saving it is completely reusable -- so we can even let our sidebar controller update the profile without ever needing to see the Profile state itself -- and no messy `$scope.$on` listeners!
+Pretty straight forward! We could add things like a modal dialog here by wrapping the `updateUserProfile` function call inside a function and calling `then` off the promise that the action returns. A nice small controller and the logic for saving it is completely reusable -- so we can even let our sidebar controller update the profile without ever needing to see the Profile state itself -- and no messy `$scope.$on` listeners!
 
 For good measure, let's have a look at the `updateUserProfile` action, it follows the same routine as the fetchUserProfile action from earlier.
 
